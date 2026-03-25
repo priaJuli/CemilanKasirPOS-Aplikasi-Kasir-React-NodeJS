@@ -1,0 +1,35 @@
+services:
+
+  node-backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: cemilan-node-backend
+    restart: always
+    environment:
+      DB_HOST: ${DB_HOST:-mysql-db}
+      DB_USER: ${DB_USER:-root}
+      DB_PASS: ${DB_PASS:-root}
+      DB_NAME: ${DB_NAME:-cemilankasirpos_php_v02}
+      PORT: ${PORT:-3001}
+      JWT_SECRET: ${JWT_SECRET:-secret}
+      NODE_ENV: production
+    networks:
+      - main_db_t4t
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cemilan-frontend
+    restart: always
+    ports:
+      - "8001:8001"
+    depends_on:
+      - node-backend
+    networks:
+      - main_db_t4t
+
+networks:
+  main_db_t4t:
+    external: true

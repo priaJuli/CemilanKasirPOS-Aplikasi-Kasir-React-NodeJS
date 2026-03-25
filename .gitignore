@@ -25,7 +25,8 @@ dist-ssr
 *.sw?
 
 # Environment Variables
-# .env
+.env
+server/.env
 # .env.*
 # !.env.example
 
